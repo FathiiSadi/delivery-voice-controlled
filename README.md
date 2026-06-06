@@ -1,16 +1,64 @@
-# React + Vite
+# Snoonu Voice-Controlled
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Snoonu-style food delivery app with **Nunu**, a voice assistant. Just talk,
+say *"I want a burger"* and the assistant finds restaurants, shows menus, and
+builds your order for you. Works in **English and Arabic**.
 
-Currently, two official plugins are available:
+Built with **React 19**, the browser **Web Speech API** (voice in/out),
+and an **LLM** (Groq / LLaMA) that turns what you say into actions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Get the project
 
-## React Compiler
+```bash
+git clone https://github.com/FathiiSadi/delivery-voice-controlled.git
+cd snoonu-voice-controlled
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Install
 
-## Expanding the ESLint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Add API key
+
+Nunu needs a Groq API key to understand you. It's free.
+
+1. Get a key at https://console.groq.com
+2. Make a `.env` file (copy from the example):
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Open .env file and paste your key:
+
+   ```
+   VITE_GROQ_API_KEY= your new key
+   ```
+
+## Run it
+
+```bash
+npm run dev
+```
+
+Then open the link it prints.
+Click the **mic button** in the corner and start talking.
+
+
+## Other commands
+
+```bash
+npm run build     # build for production
+npm run preview   # preview the production build
+npm run lint      # check code style
+```
+
+## Push your own changes
+
+```bash
+git add .
+git commit -m "your message"
+git push
+```

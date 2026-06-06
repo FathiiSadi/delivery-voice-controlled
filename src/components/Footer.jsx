@@ -46,7 +46,7 @@ export default function Footer() {
         ))}
       </div>
       <div className="border-t border-white/10 py-4 text-center text-xs text-gray-500">
-        © 2026 Snoonu Clone — UI prototype.
+        © 2026 Snoonu — By Fathi Al-sadi.
       </div>
     </footer>
   )

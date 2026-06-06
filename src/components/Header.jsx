@@ -14,9 +14,11 @@ export default function Header() {
       <div className="w-full px-4 md:px-10 h-16 flex items-center gap-3 md:gap-4">
         <Link to="/" className="shrink-0 flex items-center" aria-label="Snoonu">
           <img
-            src={locale === 'ar' ? '/snoonu-logo-ar.png' : '/snoonu-logo-en.png'}
+            src={locale === 'ar' ? '/snoonu-logo-ar.svg' : '/snoonu-logo-en.svg'}
             alt="Snoonu"
             className={locale === 'ar' ? 'h-9 md:h-11 w-auto' : 'h-7 md:h-9 w-auto'}
+            width={143}
+            height={30}
           />
         </Link>
 
@@ -28,28 +30,28 @@ export default function Header() {
         {/* Search */}
         <div className="flex-1 max-w-2xl mx-auto">
           <div className="flex items-center bg-gray-100 hover:bg-gray-50 focus-within:bg-white border border-transparent focus-within:border-snoonu/40 rounded-full px-1 transition">
-            <button className="hidden md:flex items-center gap-1 text-xs font-semibold text-gray-600 px-3 py-2 border-e border-gray-300">
+            <button className="hidden md:flex items-center gap-1 text-xs font-semibold text-gray-600 px-4 py-2 border-e border-gray-300">
               {t('allCategories')}
               <Icon name="chevron-down" className="text-[10px]" />
             </button>
             <input
+              id="search-input"
               type="text"
               placeholder={t('searchPlaceholder')}
               className="flex-1 bg-transparent px-3 py-2.5 text-sm outline-none"
             />
-            <button className="w-9 h-9 rounded-full bg-snoonu text-white flex items-center justify-center mx-0.5 hover:bg-snoonu-dark transition">
+            <button className="w-14 h-10 rounded-full bg-snoonu text-white flex items-center justify-center hover:bg-snoonu-dark transition">
               <Icon name="search" />
             </button>
           </div>
         </div>
 
-        {/* Sign in (mock, no logic) */}
+        
         <button className="hidden md:inline-flex items-center gap-1.5 text-sm font-semibold text-charcoal hover:text-snoonu transition">
           <Icon name="user" />
           {t('signIn')}
         </button>
 
-        {/* Cart */}
         <button
           onClick={() => navigate('/cart')}
           className="relative inline-flex items-center gap-2 bg-snoonu hover:bg-snoonu-dark text-white px-3 md:px-4 py-2.5 rounded-full text-sm font-semibold transition shadow-sm"
@@ -62,7 +64,6 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Sub-row: service tabs + location + language */}
       <div className="border-t border-gray-100 bg-white">
         <div className="w-full px-4 md:px-10 h-12 flex items-center gap-6">
           <nav className="flex items-center gap-2 md:gap-5 overflow-x-auto no-scrollbar flex-1">

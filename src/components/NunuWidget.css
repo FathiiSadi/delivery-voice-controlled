@@ -1,0 +1,444 @@
+/* Nunu — floating voice assistant widget */
+
+.nunu-wrap {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+  /* Mount animation: glide from the corner where the FAB lived → center-bottom.
+     Makes it feel like the FAB itself slid in and morphed into the active UI. */
+  animation: nunu-slide-from-corner 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nunu-wrap > * {
+  pointer-events: auto;
+}
+
+@keyframes nunu-slide-from-corner {
+  from {
+    transform: translateX(calc(50vw - 50% - 24px)) translateY(6px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* RTL: FAB sits at bottom-left, so the wrap slides in from the left. */
+html[dir='rtl'] .nunu-wrap {
+  animation-name: nunu-slide-from-corner-rtl;
+}
+
+@keyframes nunu-slide-from-corner-rtl {
+  from {
+    transform: translateX(calc(-50vw + 50% + 24px)) translateY(6px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ---- Idle FAB (bottom-right corner; bottom-left for RTL) ---- */
+.nunu-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #ff3a2f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(255, 58, 47, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: nunu-fab-in 0.4s cubic-bezier(0.34, 1.5, 0.64, 1) backwards;
+}
+
+html[dir='rtl'] .nunu-fab {
+  right: auto;
+  left: 24px;
+}
+
+.nunu-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 14px 32px rgba(255, 58, 47, 0.55);
+}
+
+.nunu-fab:active {
+  transform: scale(0.94);
+}
+
+/* Pulse ring to invite interaction */
+.nunu-fab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #ff3a2f;
+  opacity: 0.5;
+  animation: nunu-pulse 2s ease-out infinite;
+  z-index: -1;
+}
+
+@keyframes nunu-pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* FAB entrance — pops in from its corner with a subtle bounce. */
+@keyframes nunu-fab-in {
+  from {
+    transform: translate(20px, 20px) scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+html[dir='rtl'] .nunu-fab {
+  animation-name: nunu-fab-in-rtl;
+}
+
+@keyframes nunu-fab-in-rtl {
+  from {
+    transform: translate(-20px, 20px) scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+.nunu-button-small {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ff3a2f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(255, 58, 47, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.nunu-button-small:hover { transform: scale(1.05); }
+.nunu-button-small:active { transform: scale(0.95); }
+
+/* ---- Listening card ---- */
+.nunu-card {
+  background: white;
+  border-radius: 24px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  min-width: 280px;
+  max-width: 420px;
+  animation: nunu-rise 0.25s ease-out;
+}
+
+@keyframes nunu-rise {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Sound waves */
+.nunu-waves {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.nunu-waves span {
+  display: block;
+  width: 4px;
+  background: #ff3a2f;
+  border-radius: 2px;
+  animation: nunu-wave 1s ease-in-out infinite;
+}
+
+.nunu-waves span:nth-child(1) { height: 10px; animation-delay: 0s; }
+.nunu-waves span:nth-child(2) { height: 20px; animation-delay: 0.15s; }
+.nunu-waves span:nth-child(3) { height: 28px; animation-delay: 0.3s; }
+.nunu-waves span:nth-child(4) { height: 20px; animation-delay: 0.45s; }
+.nunu-waves span:nth-child(5) { height: 10px; animation-delay: 0.6s; }
+
+@keyframes nunu-wave {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+
+.nunu-transcript {
+  flex: 1;
+  font-size: 14px;
+  color: #1f1f23;
+  line-height: 1.4;
+  min-height: 20px;
+}
+
+.nunu-cancel {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ff3a2f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ---- Response bubble ---- */
+.nunu-bubble {
+  background: white;
+  border-radius: 18px;
+  padding: 12px 16px;
+  max-width: 320px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  animation: nunu-fade-in 0.35s ease-out;
+}
+
+@keyframes nunu-fade-in {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.nunu-bubble-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ff3a2f;
+  margin-bottom: 4px;
+}
+
+.nunu-avatar {
+  font-size: 14px;
+}
+
+.nunu-bubble-text {
+  font-size: 14px;
+  color: #1f1f23;
+  line-height: 1.45;
+}
+
+/* ---- Card stack (restaurants / menu / cart confirm) ---- */
+.nunu-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 340px;
+  width: 100%;
+  max-height: 360px;
+  overflow-y: auto;
+  animation: nunu-fade-in 0.4s ease-out;
+  scrollbar-width: thin;
+}
+
+.nunu-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #ff3a2f;
+  padding: 4px 4px 2px;
+}
+
+/* Restaurant row with banner thumbnail */
+.nunu-restaurant {
+  background: white;
+  border-radius: 14px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.nunu-restaurant-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.nunu-restaurant-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.nunu-restaurant-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f1f23;
+  margin-bottom: 2px;
+}
+
+.nunu-restaurant-meta {
+  font-size: 11px;
+  color: #888;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Menu item row (used for menu listing + cart confirm) */
+.nunu-menu-item {
+  background: white;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-size: 13px;
+}
+
+.nunu-item-name {
+  color: #1f1f23;
+  font-weight: 500;
+}
+
+.nunu-item-price {
+  color: #ff3a2f;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.nunu-cart-confirm .nunu-section-title {
+  color: #2ea043;
+}
+
+.nunu-cart-confirm .nunu-item-name {
+  color: #2ea043;
+  font-weight: 600;
+}
+
+/* Rich cart-confirm card — image + name + description + price */
+.nunu-cart-item {
+  background: white;
+  border-radius: 14px;
+  padding: 10px;
+  display: flex;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-left: 3px solid #2ea043;
+  animation: nunu-fade-in 0.3s ease-out;
+}
+
+.nunu-cart-item-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #f3f3f3;
+}
+
+.nunu-cart-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.nunu-cart-item-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f1f23;
+  line-height: 1.2;
+}
+
+.nunu-cart-item-desc {
+  font-size: 11px;
+  color: #888;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nunu-cart-item-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2ea043;
+  margin-top: 2px;
+}
+
+/* Removed-from-cart variant — red accent + strikethrough name */
+.nunu-cart-removed .nunu-section-title {
+  color: #ff3a2f;
+}
+
+.nunu-cart-removed .nunu-cart-item {
+  border-left-color: #ff3a2f;
+  opacity: 0.92;
+}
+
+.nunu-cart-removed .nunu-cart-item-name {
+  color: #888;
+  text-decoration: line-through;
+}
+
+.nunu-cart-removed .nunu-cart-item-price {
+  color: #ff3a2f;
+}
+
+.nunu-cart-removed .nunu-cart-item-img {
+  filter: grayscale(0.5);
+}
+
+/* Thinking dots */
+.nunu-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nunu-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff3a2f;
+  animation: nunu-blink 1.2s ease-in-out infinite;
+}
+
+.nunu-dots span:nth-child(2) { animation-delay: 0.2s; }
+.nunu-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes nunu-blink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}

@@ -1,12 +1,33 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 const CartContext = createContext(null)
 
 const DELIVERY_FEE = 10
 const SERVICE_FEE = 2
+const STORAGE_KEY = 'snoonu-cart'
+
+// Rehydrate the cart from localStorage so a page refresh doesn't wipe the order.
+function loadItems() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    const parsed = raw ? JSON.parse(raw) : null
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
 
 export function CartProvider({ children }) {
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState(loadItems)
+
+  // Persist on every change so the cart survives reloads.
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
+    } catch {
+      /* storage full or unavailable — ignore */
+    }
+  }, [items])
 
   const addItem = (item, restaurantId, restaurantName) => {
     setItems((prev) => {

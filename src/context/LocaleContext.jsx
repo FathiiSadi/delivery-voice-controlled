@@ -103,13 +103,22 @@ const STRINGS = {
   },
 }
 
+const LOCALE_STORAGE_KEY = 'snoonu-locale'
+
+function readInitialLocale() {
+  if (typeof window === 'undefined') return 'ar'
+  const saved = window.localStorage.getItem(LOCALE_STORAGE_KEY)
+  return saved === 'en' || saved === 'ar' ? saved : 'ar'
+}
+
 export function LocaleProvider({ children }) {
-  const [locale, setLocale] = useState('ar')
+  const [locale, setLocale] = useState(readInitialLocale)
 
   useEffect(() => {
     const dir = locale === 'ar' ? 'rtl' : 'ltr'
     document.documentElement.setAttribute('dir', dir)
     document.documentElement.setAttribute('lang', locale)
+    try { window.localStorage.setItem(LOCALE_STORAGE_KEY, locale) } catch { /* ignore */ }
   }, [locale])
 
   const t = (key) => STRINGS[locale][key] ?? key

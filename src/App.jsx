@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
+import NunuWidget from './components/NunuWidget'
 import Home from './pages/Home'
 import Restaurants from './pages/Restaurants'
 import RestaurantDetail from './pages/RestaurantDetail'
@@ -21,6 +22,7 @@ export default function App() {
               <Route path="cart" element={<Cart />} />
             </Route>
           </Routes>
+          <NunuWidget />
         </BrowserRouter>
       </CartProvider>
     </LocaleProvider>

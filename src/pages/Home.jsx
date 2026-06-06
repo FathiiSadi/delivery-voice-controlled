@@ -37,7 +37,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* For You pill */}
       <div className="flex items-center justify-center">
         <div className="inline-flex items-center gap-2 bg-charcoal text-white rounded-full px-5 py-2.5 shadow-sm">
           <Icon name="sparkles" size={16} />

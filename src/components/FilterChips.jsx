@@ -12,7 +12,7 @@ export default function FilterChips({ active, onToggle }) {
           <button
             key={f.id}
             onClick={() => onToggle(f.id)}
-            className={`inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold rounded-full px-4 py-2 border transition ${
+            className={`inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold rounded-full px-6 py-4 border transition ${
               isOn
                 ? 'bg-snoonu text-white border-snoonu'
                 : 'bg-white text-charcoal border-gray-200 hover:border-snoonu/40'

@@ -35,7 +35,7 @@ export default function Restaurants() {
 
       <CuisineRibbon activeId={activeCuisine} onSelect={setActiveCuisine} />
 
-      <div className="flex justify-center">
+      <div className="flex">
         <FilterChips active={activeFilters} onToggle={toggleFilter} />
       </div>
 

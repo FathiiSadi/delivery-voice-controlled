@@ -113,7 +113,6 @@ export default function MenuItemDialog({ item, restaurant, onAdd, onClose }) {
               </div>
             </div>
 
-            {/* Content side */}
             <div className="md:order-1 p-4 md:p-6 space-y-6">
               <div>
                 <h2 className="text-2xl md:text-3xl font-extrabold text-charcoal">{itemName}</h2>
@@ -134,7 +133,6 @@ export default function MenuItemDialog({ item, restaurant, onAdd, onClose }) {
           </div>
         </div>
 
-        {/* Footer */}
         <div className="border-t border-gray-100 p-3 md:p-4 flex items-stretch gap-3">
           <button
             type="button"
