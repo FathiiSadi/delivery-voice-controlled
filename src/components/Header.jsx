@@ -14,7 +14,7 @@ export default function Header() {
       <div className="w-full px-4 md:px-10 h-16 flex items-center gap-3 md:gap-4">
         <Link to="/" className="shrink-0 flex items-center" aria-label="Snoonu">
           <img
-            src={locale === 'ar' ? '/snoonu-logo-ar.svg' : '/snoonu-logo-en.svg'}
+            src={`${import.meta.env.BASE_URL}${locale === 'ar' ? 'snoonu-logo-ar.svg' : 'snoonu-logo-en.svg'}`}
             alt="Snoonu"
             className={locale === 'ar' ? 'h-9 md:h-11 w-auto' : 'h-7 md:h-9 w-auto'}
             width={143}

@@ -24,7 +24,7 @@ export default function Footer() {
       <div className="w-full px-6 md:px-12 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
         <div>
           <img
-            src={isAr ? '/snoonu-logo-ar.png' : '/snoonu-logo-en.png'}
+            src={`${import.meta.env.BASE_URL}${isAr ? 'snoonu-logo-ar.svg' : 'snoonu-logo-en.svg'}`}
             alt="Snoonu"
             className={`${isAr ? 'h-10' : 'h-8'} w-auto mb-3 brightness-0 invert`}
           />
