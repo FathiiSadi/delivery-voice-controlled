@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import NunuWidget from './components/NunuWidget'
 import Home from './pages/Home'
@@ -13,7 +13,7 @@ export default function App() {
   return (
     <LocaleProvider>
       <CartProvider>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route element={<Layout />}>
               <Route index element={<Home />} />
@@ -23,7 +23,7 @@ export default function App() {
             </Route>
           </Routes>
           <NunuWidget />
-        </BrowserRouter>
+        </HashRouter>
       </CartProvider>
     </LocaleProvider>
   )
